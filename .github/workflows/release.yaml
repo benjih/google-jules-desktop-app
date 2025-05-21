@@ -1,0 +1,37 @@
+﻿name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        build: [
+          {zipName: google-jules-desktop-app-linux-amd64-v0.0.1, name: google-jules, platform: linux/amd64, os: ubuntu-latest},
+          {zipName: google-jules-desktop-app-windows-amd64-v0.0.1, name: "Google-Jules.exe", platform: windows/amd64, os: windows-latest},
+        ]
+    runs-on: ${{ matrix.build.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dAppServer/wails-build-action@main
+        with:
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          build-obfuscate: true
+          package: true
+
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: build/bin/${{ matrix.build.name }}
+      #     asset_name: ${{ matrix.build.name }}
+      #     tag: v0.0.1
+      #     overwrite: true
+      #     body: "This is my release text"

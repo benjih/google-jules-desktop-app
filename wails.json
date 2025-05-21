@@ -1,0 +1,11 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "Google Jules",
+  "outputfilename": "Google Jules",
+  "frontend:install": "",
+  "frontend:build": "",
+  "author": {
+    "name": "benjih",
+    "email": "benji@sixp.in"
+  }
+}
